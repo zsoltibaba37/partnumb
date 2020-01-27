@@ -29,9 +29,9 @@ print_line(){
 	printf "\n"
 }
 print_line
-echo""
+echo ""
 printf "    Collection of part numbers from '"$1"' folder. - Alkatrész darabszámok gyűjtése a '"$1"' mappából. \n"
-echo""
+echo ""
 print_line
 find $1 -type f -name "*pdf" -exec bash -c 'pdfgrep -H "a" {} | cut -d ":" -f1 | uniq && echo""' \; -exec bash -c 'pdfgrep -i -A1000 "méretek:" {} | grep  -i ".GEO" | grep -v "FÁJL NEVE" | rev | cut -d " " -f1 | rev ' \; -exec bash -c 'pdfgrep -i -A1000 "ÜGYFÉL NEVE:" {} | grep "Mennyiség:" | tr -d " " | tr -d "\t"' \; -exec printf "=%.0s" {1..120} \; -exec echo "" \;
 
