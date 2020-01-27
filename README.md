@@ -1,6 +1,5 @@
 # partnumb
 -----
-
 This little script collect the number of parts, from all PDF files in subfolders.
 From Trumpf - TruTops PDF files.
 
