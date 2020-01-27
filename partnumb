@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# This little script collects the part numbers,
+# from Trutops generadet PDF files.
+# 
+# Don't forget use 'detox' (Corrects file and folder names), before use this tool.
+#
+#
+usage="Usage: partnumb <folder name>"
+#
+case $1 in
+ "") echo ""
+     echo " Missing the folder name."
+     echo " $usage"
+     exit 1
+     ;;
+ "-h") echo ""
+       echo " $usage"
+       exit 0
+       ;;
+ "--help") echo ""
+           echo " $usage"
+           exit 0
+           ;;
+esac
+#
+print_line(){
+	printf "=%.0s" {1..120}
+	printf "\n"
+}
+print_line
+echo""
+printf "    Collection of part numbers from '"$1"' folder. - Alkatrész darabszámok gyűjtése a '"$1"' mappából. \n"
+echo""
+print_line
+find $1 -type f -name "*pdf" -exec bash -c 'pdfgrep -H "a" {} | cut -d ":" -f1 | uniq && echo""' \; -exec bash -c 'pdfgrep -i -A1000 "méretek:" {} | grep  -i ".GEO" | grep -v "FÁJL NEVE" | rev | cut -d " " -f1 | rev ' \; -exec bash -c 'pdfgrep -i -A1000 "ÜGYFÉL NEVE:" {} | grep "Mennyiség:" | tr -d " " | tr -d "\t"' \; -exec printf "=%.0s" {1..120} \; -exec echo "" \;
+
